@@ -40,8 +40,8 @@ Local Claude Code analytics dashboard over `~/.claude/projects/**/*.jsonl`. Repl
 
 ## Release
 - README ships inside the npm tarball — update it *before* publishing; AGENTS.md is not published
-- `npm version patch|minor` → `npm publish` (`prepack` runs `nuxt build`); publishing is done by the user (2FA)
+- `npm version patch|minor` → `npm publish --otp=<code>` (`prepack` runs `nuxt build`); publishing is done by the user (2FA required)
 - Check contents first: `npm pack --dry-run` should list only `bin/`, `.output/`, `README.md`, `LICENSE`, `package.json`
 
 ## Status
-Dashboard and CLI work; global install from an `npm pack` tarball verified. Not yet published to npm.
+Published to npm: `claude-usage-analytics@0.1.0` (https://www.npmjs.com/package/claude-usage-analytics).
