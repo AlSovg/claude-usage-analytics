@@ -5,7 +5,20 @@
   "type": "module",
   "license": "MIT",
   "author": "Alexander (https://github.com/AlSovg)",
-  "keywords": ["claude", "claude-code", "analytics", "dashboard", "tokens", "cli"],
+  "homepage": "https://github.com/AlSovg/claude-usage-analytics#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AlSovg/claude-usage-analytics.git"
+  },
+  "bugs": "https://github.com/AlSovg/claude-usage-analytics/issues",
+  "keywords": [
+    "claude",
+    "claude-code",
+    "analytics",
+    "dashboard",
+    "tokens",
+    "cli"
+  ],
   "bin": {
     "claude-usage-analytics": "bin/cli.mjs"
   },

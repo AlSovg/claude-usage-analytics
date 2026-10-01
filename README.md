@@ -36,6 +36,8 @@ The package ships only the prebuilt server, so installing it pulls no dependenci
 ## Development
 
 ```bash
+git clone https://github.com/AlSovg/claude-usage-analytics.git
+cd claude-usage-analytics
 npm install
 npm run dev        # http://localhost:3000
 npm run build      # production build into .output

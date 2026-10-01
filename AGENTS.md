@@ -1,5 +1,7 @@
 # claude-usage-analytics
 
+Repo: https://github.com/AlSovg/claude-usage-analytics (public). npm package: `claude-usage-analytics`.
+
 Local Claude Code analytics dashboard over `~/.claude/projects/**/*.jsonl`. Replacement for the broken `claude-code-templates --analytics`. What it shows and how it counts — see `README.md`.
 
 ## Stack
