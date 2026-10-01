@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { RecentConversation } from '../../../shared/types/analytics'
+import type { RecentConversation } from '#shared/types/analytics'
 import { formatCompactNumber, formatDateTime, shortProjectName } from '../../utils/format'
 
 defineProps<{ items: RecentConversation[] }>()

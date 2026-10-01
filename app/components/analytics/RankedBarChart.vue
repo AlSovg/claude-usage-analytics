@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { Bar } from 'vue-chartjs'
-import type { RankedItem } from '../../../shared/types/analytics'
+import type { RankedItem } from '#shared/types/analytics'
 import { formatCompactNumber } from '../../utils/format'
 
 const props = defineProps<{

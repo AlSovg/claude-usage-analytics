@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { HeatmapDay } from '../../../shared/types/analytics'
+import type { HeatmapDay } from '#shared/types/analytics'
 import { formatCompactNumber, formatDateShort, formatNumber, formatWeekday } from '../../utils/format'
 
 const props = defineProps<{ days: HeatmapDay[] }>()

@@ -1,4 +1,4 @@
-import { RANGE_KEYS, type RangeKey } from '../../shared/types/analytics'
+import { RANGE_KEYS, type RangeKey } from '#shared/types/analytics'
 import { toDateKey } from './date'
 
 export function isRangeKey(value: unknown): value is RangeKey {

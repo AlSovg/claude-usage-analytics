@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import type { RangeKey } from '../../../shared/types/analytics'
-import { RANGE_KEYS } from '../../../shared/types/analytics'
+import type { RangeKey } from '#shared/types/analytics'
+import { RANGE_KEYS } from '#shared/types/analytics'
 
 const range = defineModel<RangeKey>({ required: true })
 </script>

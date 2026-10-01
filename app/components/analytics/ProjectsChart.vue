@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { Bar } from 'vue-chartjs'
-import type { ProjectUsage } from '../../../shared/types/analytics'
+import type { ProjectUsage } from '#shared/types/analytics'
 import { formatCompactNumber, shortProjectName } from '../../utils/format'
 
 const props = defineProps<{ items: ProjectUsage[] }>()

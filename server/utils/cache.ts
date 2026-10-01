@@ -1,4 +1,4 @@
-import type { AnalyticsResponse, RangeKey } from '../../shared/types/analytics'
+import type { AnalyticsResponse, RangeKey } from '#shared/types/analytics'
 import type { FileSummary } from './parseSessionFile'
 
 interface FileCacheEntry {

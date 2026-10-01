@@ -1,6 +1,6 @@
 import { buildAnalyticsResponse } from '../utils/aggregate'
 import { isRangeKey } from '../utils/range'
-import type { RangeKey } from '../../shared/types/analytics'
+import type { RangeKey } from '#shared/types/analytics'
 
 export default defineEventHandler(async (event) => {
   const query = getQuery(event)

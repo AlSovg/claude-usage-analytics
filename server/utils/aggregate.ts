@@ -11,7 +11,7 @@ import type {
   ProjectUsage,
   RankedItem,
   RecentConversation
-} from '../../shared/types/analytics'
+} from '#shared/types/analytics'
 
 /** Sums per-date nested counters across files for in-range dates. */
 function sumNested(

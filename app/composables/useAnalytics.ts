@@ -1,4 +1,4 @@
-import type { AnalyticsResponse, RangeKey } from '../../shared/types/analytics'
+import type { AnalyticsResponse, RangeKey } from '#shared/types/analytics'
 
 export function useAnalytics() {
   const range = useState<RangeKey>('analytics-range', () => '30d')

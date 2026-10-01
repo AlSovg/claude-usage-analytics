@@ -29,3 +29,6 @@ design_chats-*/
 light_metadata-*/
 *.zip
 manifest-*.json
+
+# npm pack output
+*.tgz

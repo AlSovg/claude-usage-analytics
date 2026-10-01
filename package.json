@@ -1,15 +1,31 @@
 {
   "name": "claude-usage-analytics",
+  "version": "0.1.0",
+  "description": "Local dashboard for Claude Code usage: tokens, activity, models, tools, agents and projects",
   "type": "module",
-  "private": true,
+  "license": "MIT",
+  "author": "Alexander (https://github.com/AlSovg)",
+  "keywords": ["claude", "claude-code", "analytics", "dashboard", "tokens", "cli"],
+  "bin": {
+    "claude-usage-analytics": "bin/cli.mjs"
+  },
+  "files": [
+    "bin",
+    ".output"
+  ],
+  "engines": {
+    "node": ">=20.11.1"
+  },
   "scripts": {
     "build": "nuxt build",
     "dev": "nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
-    "postinstall": "nuxt prepare"
+    "start": "node bin/cli.mjs",
+    "prepare": "nuxt prepare",
+    "prepack": "nuxt build"
   },
-  "dependencies": {
+  "devDependencies": {
     "@nuxtjs/i18n": "^10.6.0",
     "chart.js": "^4.5.1",
     "nuxt": "^4.5.2",

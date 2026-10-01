@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { Bar } from 'vue-chartjs'
-import type { DailyTokenPoint } from '../../../shared/types/analytics'
+import type { DailyTokenPoint } from '#shared/types/analytics'
 import { formatDateShort, formatCompactNumber } from '../../utils/format'
 
 const props = defineProps<{ points: DailyTokenPoint[] }>()
