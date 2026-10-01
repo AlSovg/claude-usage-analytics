@@ -1,0 +1,73 @@
+{
+  "meta": {
+    "filesScanned": "файлов истории: {n}",
+    "reparsed": "(перечитано заново: {n})"
+  },
+  "status": {
+    "loading": "Загрузка…",
+    "loadingChart": "Загрузка графика…",
+    "error": "Ошибка загрузки: {message}"
+  },
+  "range": {
+    "7d": "7D",
+    "30d": "30D",
+    "90d": "90D",
+    "all": "Всё"
+  },
+  "stats": {
+    "totalTokens": "Всего токенов",
+    "conversations": "Разговоры",
+    "activeSessions": "Активные сессии",
+    "agentUses": "Вызовы агентов",
+    "cacheHitRate": "Попадания в кэш"
+  },
+  "tabs": {
+    "overview": "Обзор",
+    "tools": "Модели и инструменты",
+    "projects": "Проекты"
+  },
+  "panels": {
+    "tokenUsage": "Использование токенов по дням",
+    "activity": "Активность",
+    "hourly": "Активность по часам",
+    "models": "Модели (токены)",
+    "agents": "Использование агентов",
+    "tools": "Инструменты",
+    "projects": "Проекты",
+    "recent": "Последние разговоры"
+  },
+  "values": {
+    "tokens": "Токены",
+    "uses": "Использований",
+    "calls": "Вызовов",
+    "messages": "Сообщений",
+    "conversations": "Разговоры"
+  },
+  "tokenTypes": {
+    "input": "Вход",
+    "output": "Выход",
+    "cacheWrite": "Запись в кэш",
+    "cacheRead": "Чтение из кэша"
+  },
+  "empty": {
+    "range": "Нет данных за выбранный период",
+    "period": "Нет данных за период",
+    "agents": "Нет вызовов агентов за период",
+    "tools": "Нет вызовов инструментов за период",
+    "conversations": "Нет разговоров за период"
+  },
+  "heatmap": {
+    "perDay": "{max} токенов/день",
+    "cell": "{date}: токенов — {tokens}, сообщений — {messages}"
+  },
+  "projects": {
+    "tokens": "Токены: {n}"
+  },
+  "recent": {
+    "project": "Проект",
+    "branch": "Ветка",
+    "lastActivity": "Последняя активность",
+    "messages": "Сообщений",
+    "tokens": "Токены"
+  }
+}

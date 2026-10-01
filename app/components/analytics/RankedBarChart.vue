@@ -10,6 +10,8 @@ const props = defineProps<{
   emptyText: string
 }>()
 
+const { locale } = useI18n()
+
 const chartData = computed(() => ({
   labels: props.items.map(i => i.label),
   datasets: [
@@ -17,16 +19,17 @@ const chartData = computed(() => ({
   ]
 }))
 
-const chartOptions = {
+const chartOptions = computed(() => ({
+  locale: locale.value,
   indexAxis: 'y' as const,
   responsive: true,
   maintainAspectRatio: false,
   plugins: { legend: { display: false } },
   scales: {
-    x: { ticks: { color: '#71717a', callback: (v: string | number) => formatCompactNumber(Number(v)) }, grid: { color: '#27272a' } },
+    x: { ticks: { color: '#71717a', callback: (v: string | number) => formatCompactNumber(Number(v), locale.value) }, grid: { color: '#27272a' } },
     y: { ticks: { color: '#a1a1aa' }, grid: { display: false } }
   }
-}
+}))
 </script>
 
 <template>

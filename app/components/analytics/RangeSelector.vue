@@ -3,13 +3,6 @@ import type { RangeKey } from '../../../shared/types/analytics'
 import { RANGE_KEYS } from '../../../shared/types/analytics'
 
 const range = defineModel<RangeKey>({ required: true })
-
-const labels: Record<RangeKey, string> = {
-  '7d': '7D',
-  '30d': '30D',
-  '90d': '90D',
-  all: 'All'
-}
 </script>
 
 <template>
@@ -22,7 +15,7 @@ const labels: Record<RangeKey, string> = {
       :class="{ active: range === key }"
       @click="range = key"
     >
-      {{ labels[key] }}
+      {{ $t(`range.${key}`) }}
     </button>
   </div>
 </template>

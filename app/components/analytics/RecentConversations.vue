@@ -3,6 +3,8 @@ import type { RecentConversation } from '../../../shared/types/analytics'
 import { formatCompactNumber, formatDateTime, shortProjectName } from '../../utils/format'
 
 defineProps<{ items: RecentConversation[] }>()
+
+const { locale } = useI18n()
 </script>
 
 <template>
@@ -10,24 +12,24 @@ defineProps<{ items: RecentConversation[] }>()
     <table v-if="items.length" class="conv-table">
       <thead>
         <tr>
-          <th>Проект</th>
-          <th>Ветка</th>
-          <th>Последняя активность</th>
-          <th>Сообщений</th>
-          <th>Токены</th>
+          <th>{{ $t('recent.project') }}</th>
+          <th>{{ $t('recent.branch') }}</th>
+          <th>{{ $t('recent.lastActivity') }}</th>
+          <th>{{ $t('recent.messages') }}</th>
+          <th>{{ $t('recent.tokens') }}</th>
         </tr>
       </thead>
       <tbody>
         <tr v-for="item in items" :key="item.sessionId">
           <td class="project-cell" :title="item.cwd ?? item.projectSlug">{{ shortProjectName(item.cwd, item.projectSlug) }}</td>
           <td class="branch-cell">{{ item.gitBranch ?? '—' }}</td>
-          <td>{{ formatDateTime(item.lastActivityAt) }}</td>
+          <td>{{ formatDateTime(item.lastActivityAt, locale) }}</td>
           <td class="num">{{ item.messageCount }}</td>
-          <td class="num">{{ formatCompactNumber(item.tokenTotal) }}</td>
+          <td class="num">{{ formatCompactNumber(item.tokenTotal, locale) }}</td>
         </tr>
       </tbody>
     </table>
-    <p v-else class="empty">Нет разговоров за период</p>
+    <p v-else class="empty">{{ $t('empty.conversations') }}</p>
   </div>
 </template>
 

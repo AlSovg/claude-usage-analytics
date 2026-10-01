@@ -2,16 +2,16 @@
 const { range, data, status, error } = useAnalytics()
 
 const TABS = [
-  { key: 'overview', label: 'Обзор' },
-  { key: 'tools', label: 'Модели и инструменты' },
-  { key: 'projects', label: 'Проекты' }
-] as const
-type TabKey = typeof TABS[number]['key']
+'overview', 'tools', 'projects'] as const
+type TabKey = typeof TABS[number]
+
+const { locale, locales, setLocale } = useI18n()
+const otherLocale = computed(() => locales.value.find(l => l.code !== locale.value)!)
 
 const route = useRoute()
 const router = useRouter()
 const tab = computed<TabKey>({
-  get: () => TABS.find(t => t.key === route.query.tab)?.key ?? 'overview',
+  get: () => TABS.find(key => key === route.query.tab) ?? 'overview',
   set: key => router.replace({ query: { ...route.query, tab: key } })
 })
 </script>
@@ -23,56 +23,59 @@ const tab = computed<TabKey>({
         <h1>Claude Code Usage Analytics</h1>
         <p v-if="data" class="range-meta">
           {{ data.rangeStart ?? '…' }} — {{ data.rangeEnd }} ·
-          файлов истории: {{ data.meta.filesScanned }}
+          {{ $t('meta.filesScanned', { n: data.meta.filesScanned }) }}
           <template v-if="data.meta.filesParsedThisRequest">
-            (перечитано заново: {{ data.meta.filesParsedThisRequest }})
+            {{ $t('meta.reparsed', { n: data.meta.filesParsedThisRequest }) }}
           </template>
         </p>
       </div>
-      <RangeSelector v-model="range" />
+      <div class="header-controls">
+        <RangeSelector v-model="range" />
+        <button type="button" class="lang-btn" @click="setLocale(otherLocale.code)">{{ otherLocale.name }}</button>
+      </div>
     </header>
 
-    <p v-if="status === 'pending' && !data" class="status-line">Загрузка…</p>
-    <p v-else-if="error" class="status-line error">Ошибка загрузки: {{ error.message }}</p>
+    <p v-if="status === 'pending' && !data" class="status-line">{{ $t('status.loading') }}</p>
+    <p v-else-if="error" class="status-line error">{{ $t('status.error', { message: error.message }) }}</p>
 
     <template v-if="data">
       <section class="stat-grid">
-        <StatCard label="Всего токенов" :value="data.totals.totalTokens" />
-        <StatCard label="Разговоры" :value="data.totals.conversations" />
-        <StatCard label="Активные сессии" :value="data.totals.activeSessions" />
-        <StatCard label="Вызовы агентов" :value="data.totals.agentUses" />
-        <StatCard label="Попадания в кэш" :value="data.totals.cacheHitRate" percent />
+        <StatCard :label="$t('stats.totalTokens')" :value="data.totals.totalTokens" />
+        <StatCard :label="$t('stats.conversations')" :value="data.totals.conversations" />
+        <StatCard :label="$t('stats.activeSessions')" :value="data.totals.activeSessions" />
+        <StatCard :label="$t('stats.agentUses')" :value="data.totals.agentUses" />
+        <StatCard :label="$t('stats.cacheHitRate')" :value="data.totals.cacheHitRate" percent />
       </section>
 
       <nav class="tabs" role="tablist">
         <button
-          v-for="t in TABS"
-          :key="t.key"
+          v-for="key in TABS"
+          :key="key"
           type="button"
           role="tab"
           class="tab"
-          :class="{ active: tab === t.key }"
-          :aria-selected="tab === t.key"
-          @click="tab = t.key"
+          :class="{ active: tab === key }"
+          :aria-selected="tab === key"
+          @click="tab = key"
         >
-          {{ t.label }}
+          {{ $t(`tabs.${key}`) }}
         </button>
       </nav>
 
       <template v-if="tab === 'overview'">
         <section class="panel">
-          <h2>Использование токенов по дням</h2>
+          <h2>{{ $t('panels.tokenUsage') }}</h2>
           <TokenUsageChart :points="data.tokenUsageOverTime" />
         </section>
 
         <div class="two-col activity-row">
           <section class="panel">
-            <h2>Активность</h2>
+            <h2>{{ $t('panels.activity') }}</h2>
             <ActivityHeatmap :days="data.activityHeatmap" />
           </section>
 
           <section class="panel">
-            <h2>Активность по часам</h2>
+            <h2>{{ $t('panels.hourly') }}</h2>
             <HourlyActivityChart :hours="data.hourlyActivity" />
           </section>
         </div>
@@ -81,30 +84,30 @@ const tab = computed<TabKey>({
       <template v-else-if="tab === 'tools'">
         <div class="two-col">
           <section class="panel">
-            <h2>Модели (токены)</h2>
-            <RankedBarChart :items="data.modelUsage" color="#34d399" value-label="Токены" empty-text="Нет данных за период" />
+            <h2>{{ $t('panels.models') }}</h2>
+            <RankedBarChart :items="data.modelUsage" color="#34d399" :value-label="$t('values.tokens')" :empty-text="$t('empty.period')" />
           </section>
 
           <section class="panel">
-            <h2>Использование агентов</h2>
-            <RankedBarChart :items="data.agentUsage" color="#8b5cf6" value-label="Использований" empty-text="Нет вызовов агентов за период" />
+            <h2>{{ $t('panels.agents') }}</h2>
+            <RankedBarChart :items="data.agentUsage" color="#8b5cf6" :value-label="$t('values.uses')" :empty-text="$t('empty.agents')" />
           </section>
         </div>
 
         <section class="panel">
-          <h2>Инструменты</h2>
-          <RankedBarChart :items="data.toolUsage" color="#f472b6" value-label="Вызовов" empty-text="Нет вызовов инструментов за период" />
+          <h2>{{ $t('panels.tools') }}</h2>
+          <RankedBarChart :items="data.toolUsage" color="#f472b6" :value-label="$t('values.calls')" :empty-text="$t('empty.tools')" />
         </section>
       </template>
 
       <template v-else>
         <section class="panel">
-          <h2>Проекты</h2>
+          <h2>{{ $t('panels.projects') }}</h2>
           <ProjectsChart :items="data.projects" />
         </section>
 
         <section class="panel conversations-panel">
-          <h2>Последние разговоры</h2>
+          <h2>{{ $t('panels.recent') }}</h2>
           <RecentConversations :items="data.recentConversations" />
         </section>
       </template>
@@ -134,6 +137,27 @@ const tab = computed<TabKey>({
   font-size: 1.5rem;
   font-weight: 600;
   margin: 0;
+}
+
+.header-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.lang-btn {
+  padding: 10px 14px;
+  border: none;
+  border-radius: 10px;
+  background: var(--surface-2);
+  color: var(--text-secondary);
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.lang-btn:hover {
+  color: var(--text-primary);
 }
 
 .range-meta {

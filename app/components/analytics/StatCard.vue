@@ -8,11 +8,13 @@ const props = defineProps<{
   percent?: boolean
 }>()
 
+const { locale } = useI18n()
+
 const displayValue = computed(() => {
   if (props.percent) return `${(props.value * 100).toFixed(1)}%`
-  return (props.compact ?? true) ? formatCompactNumber(props.value) : formatNumber(props.value)
+  return (props.compact ?? true) ? formatCompactNumber(props.value, locale.value) : formatNumber(props.value, locale.value)
 })
-const fullValue = computed(() => props.percent ? displayValue.value : formatNumber(props.value))
+const fullValue = computed(() => props.percent ? displayValue.value : formatNumber(props.value, locale.value))
 </script>
 
 <template>

@@ -1,0 +1,73 @@
+{
+  "meta": {
+    "filesScanned": "history files: {n}",
+    "reparsed": "(re-parsed: {n})"
+  },
+  "status": {
+    "loading": "Loading…",
+    "loadingChart": "Loading chart…",
+    "error": "Failed to load: {message}"
+  },
+  "range": {
+    "7d": "7D",
+    "30d": "30D",
+    "90d": "90D",
+    "all": "All"
+  },
+  "stats": {
+    "totalTokens": "Total tokens",
+    "conversations": "Conversations",
+    "activeSessions": "Active sessions",
+    "agentUses": "Agent uses",
+    "cacheHitRate": "Cache hit rate"
+  },
+  "tabs": {
+    "overview": "Overview",
+    "tools": "Models & tools",
+    "projects": "Projects"
+  },
+  "panels": {
+    "tokenUsage": "Token usage per day",
+    "activity": "Activity",
+    "hourly": "Activity by hour",
+    "models": "Models (tokens)",
+    "agents": "Agent usage",
+    "tools": "Tools",
+    "projects": "Projects",
+    "recent": "Recent conversations"
+  },
+  "values": {
+    "tokens": "Tokens",
+    "uses": "Uses",
+    "calls": "Calls",
+    "messages": "Messages",
+    "conversations": "Conversations"
+  },
+  "tokenTypes": {
+    "input": "Input",
+    "output": "Output",
+    "cacheWrite": "Cache write",
+    "cacheRead": "Cache read"
+  },
+  "empty": {
+    "range": "No data for the selected range",
+    "period": "No data for this range",
+    "agents": "No agent calls in this range",
+    "tools": "No tool calls in this range",
+    "conversations": "No conversations in this range"
+  },
+  "heatmap": {
+    "perDay": "{max} tokens/day",
+    "cell": "{date}: {tokens} tokens, {messages} messages"
+  },
+  "projects": {
+    "tokens": "Tokens: {n}"
+  },
+  "recent": {
+    "project": "Project",
+    "branch": "Branch",
+    "lastActivity": "Last activity",
+    "messages": "Messages",
+    "tokens": "Tokens"
+  }
+}

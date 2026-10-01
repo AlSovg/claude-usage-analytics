@@ -1,8 +1,10 @@
 <script setup lang="ts">
 import type { HeatmapDay } from '../../../shared/types/analytics'
-import { formatCompactNumber, formatDateShort, formatNumber } from '../../utils/format'
+import { formatCompactNumber, formatDateShort, formatNumber, formatWeekday } from '../../utils/format'
 
 const props = defineProps<{ days: HeatmapDay[] }>()
+
+const { locale } = useI18n()
 
 interface Cell {
   date: string
@@ -11,7 +13,8 @@ interface Cell {
   level: number
 }
 
-const WEEKDAYS = ['Пн', '', 'Ср', '', 'Пт', '', '']
+// Label only Mon/Wed/Fri rows, GitHub-style.
+const weekdays = computed(() => [0, 1, 2, 3, 4, 5, 6].map(i => (i % 2 === 0 && i < 6 ? formatWeekday(i, locale.value) : '')))
 
 function toDateKey(d: Date): string {
   const y = d.getFullYear()
@@ -62,7 +65,7 @@ const labelEvery = computed(() => (weeks.value.length > 26 ? 2 : 1))
     <div class="heatmap-scroll">
       <div class="heatmap-body" :style="{ '--weeks': weeks.length }">
         <span
-          v-for="(label, di) in WEEKDAYS"
+          v-for="(label, di) in weekdays"
           :key="`wd${di}`"
           class="weekday"
           :style="{ gridColumn: 1, gridRow: di + 1 }"
@@ -74,7 +77,7 @@ const labelEvery = computed(() => (weeks.value.length > 26 ? 2 : 1))
             class="heatmap-cell"
             :data-level="cell.level"
             :style="{ gridColumn: wi + 2, gridRow: di + 1 }"
-            :title="`${formatDateShort(cell.date)}: ${formatNumber(cell.tokenTotal)} токенов, ${cell.messageCount} сообщений`"
+            :title="$t('heatmap.cell', { date: formatDateShort(cell.date), tokens: formatNumber(cell.tokenTotal, locale), messages: cell.messageCount })"
           />
           <span
             v-if="wi % labelEvery === 0"
@@ -87,10 +90,10 @@ const labelEvery = computed(() => (weeks.value.length > 26 ? 2 : 1))
     <div class="legend">
       <span>0</span>
       <span v-for="level in 5" :key="level" class="heatmap-cell" :data-level="level - 1" />
-      <span>{{ formatCompactNumber(max) }} токенов/день</span>
+      <span>{{ $t('heatmap.perDay', { max: formatCompactNumber(max, locale) }) }}</span>
     </div>
   </div>
-  <p v-else class="empty">Нет данных за выбранный период</p>
+  <p v-else class="empty">{{ $t('empty.range') }}</p>
 </template>
 
 <style scoped>

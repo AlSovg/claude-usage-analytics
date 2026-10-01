@@ -5,14 +5,17 @@ import { formatCompactNumber, shortProjectName } from '../../utils/format'
 
 const props = defineProps<{ items: ProjectUsage[] }>()
 
+const { t, locale } = useI18n()
+
 const chartData = computed(() => ({
   labels: props.items.map(i => shortProjectName(i.cwd, i.projectSlug)),
   datasets: [
-    { label: 'Разговоры', data: props.items.map(i => i.conversations), backgroundColor: '#22d3ee', borderRadius: 4 }
+    { label: t('values.conversations'), data: props.items.map(i => i.conversations), backgroundColor: '#22d3ee', borderRadius: 4 }
   ]
 }))
 
-const chartOptions = {
+const chartOptions = computed(() => ({
+  locale: locale.value,
   indexAxis: 'y' as const,
   responsive: true,
   maintainAspectRatio: false,
@@ -21,7 +24,7 @@ const chartOptions = {
     tooltip: {
       callbacks: {
         title: (items: any[]) => props.items[items[0]?.dataIndex]?.cwd ?? props.items[items[0]?.dataIndex]?.projectSlug ?? '',
-        afterLabel: (ctx: any) => `Токены: ${formatCompactNumber(props.items[ctx.dataIndex]?.tokenTotal ?? 0)}`
+        afterLabel: (ctx: any) => t('projects.tokens', { n: formatCompactNumber(props.items[ctx.dataIndex]?.tokenTotal ?? 0, locale.value) })
       }
     }
   },
@@ -29,14 +32,14 @@ const chartOptions = {
     x: { ticks: { color: '#71717a' }, grid: { color: '#27272a' } },
     y: { ticks: { color: '#a1a1aa' }, grid: { display: false } }
   }
-}
+}))
 </script>
 
 <template>
   <div class="chart-wrap" :style="{ height: Math.max(180, items.length * 32) + 'px' }">
     <ClientOnly>
       <Bar v-if="items.length" :data="chartData" :options="chartOptions" />
-      <p v-else class="empty">Нет данных за период</p>
+      <p v-else class="empty">{{ $t('empty.period') }}</p>
     </ClientOnly>
   </div>
 </template>

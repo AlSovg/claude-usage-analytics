@@ -3,14 +3,17 @@ import { Bar } from 'vue-chartjs'
 
 const props = defineProps<{ hours: number[] }>()
 
+const { t, locale } = useI18n()
+
 const chartData = computed(() => ({
   labels: props.hours.map((_, h) => String(h).padStart(2, '0')),
   datasets: [
-    { label: 'Сообщений', data: props.hours, backgroundColor: '#f59e0b', borderRadius: 4 }
+    { label: t('values.messages'), data: props.hours, backgroundColor: '#f59e0b', borderRadius: 4 }
   ]
 }))
 
-const chartOptions = {
+const chartOptions = computed(() => ({
+  locale: locale.value,
   responsive: true,
   maintainAspectRatio: false,
   plugins: {
@@ -21,7 +24,7 @@ const chartOptions = {
     x: { ticks: { color: '#71717a' }, grid: { display: false } },
     y: { ticks: { color: '#71717a' }, grid: { color: '#27272a' } }
   }
-}
+}))
 </script>
 
 <template>
