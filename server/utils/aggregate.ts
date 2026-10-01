@@ -248,7 +248,8 @@ export async function buildAnalyticsResponse(range: RangeKey): Promise<Analytics
 
   const response: AnalyticsResponse = {
     range,
-    rangeStart: resolved.startKey,
+    // 'all' has no fixed start — report the earliest day with data instead.
+    rangeStart: resolved.startKey ?? tokenUsageOverTime[0]?.date ?? null,
     rangeEnd: resolved.endKey,
     generatedAt: new Date().toISOString(),
     totals,
