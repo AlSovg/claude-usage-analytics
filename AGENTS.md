@@ -10,7 +10,9 @@ Local Claude Code analytics dashboard over `~/.claude/projects/**/*.jsonl`. Repl
 
 ## Commands
 - `npm run dev` — http://localhost:3000
-- `npm run build` — production build
+- `npm run build` — production build into `.output`
+- `npm start` — run the build via `bin/cli.mjs` (port 3300)
+- `npm pack` — builds (`prepack`) and creates the installable tarball
 - Typecheck is not set up (no `vue-tsc`)
 
 ## Architecture
@@ -26,11 +28,18 @@ Local Claude Code analytics dashboard over `~/.claude/projects/**/*.jsonl`. Repl
 - Formatters (`app/utils/format.ts`) take `locale` explicitly; chart options are `computed` with `locale: locale.value`
 - Don't add `fs.watch`/chokidar — full recompute on every change was the main bug of the tool this replaces
 - Read files as streams (`readline`), never whole: some are 20+ MB
+- Import shared code via `#shared/...`, never relative `../../shared` — relative value imports break the Nitro production build
+- All npm deps are `devDependencies`: the published package is just `bin/` + prebuilt `.output`. Keep `prepare` (not `postinstall`) for `nuxt prepare`, otherwise global installs fail
 
 ## Gotchas
 - Editing files in `server/` drops the in-memory cache: the first request re-parses ~500 files and can take over 2 minutes
 - A subagent call is a `tool_use` with `name === "Agent"` (not `"Task"`)
 - The project root contains a claude.ai account export with personal data — it is in `.gitignore`; never commit or publish it
 
+## Release
+- README ships inside the npm tarball — update it *before* publishing; AGENTS.md is not published
+- `npm version patch|minor` → `npm publish` (`prepack` runs `nuxt build`); publishing is done by the user (2FA)
+- Check contents first: `npm pack --dry-run` should list only `bin/`, `.output/`, `README.md`, `LICENSE`, `package.json`
+
 ## Status
-Dashboard works. CLI packaging (`bin/cli.mjs`, npm publish) is the next step, not started.
+Dashboard and CLI work; global install from an `npm pack` tarball verified. Not yet published to npm.

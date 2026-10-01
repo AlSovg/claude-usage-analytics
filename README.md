@@ -3,6 +3,8 @@
 A local dashboard for your Claude Code history: tokens, activity, models, tools, agents and projects.
 Data is read directly from `~/.claude/projects/**/*.jsonl` and never leaves your machine.
 
+> Unofficial community tool, not affiliated with or endorsed by Anthropic.
+
 ## Features
 
 - **KPIs:** total tokens, conversations, active sessions, agent calls, cache hit rate.
@@ -14,18 +16,30 @@ Range: 7D / 30D / 90D / All. UI in English and Russian (toggle in the header).
 
 ## Getting started
 
-Requires Node.js ≥ 20.
+Requires Node.js ≥ 20.11.1.
+
+```bash
+npx claude-usage-analytics
+```
+
+or install globally:
+
+```bash
+npm install -g claude-usage-analytics
+claude-usage-analytics      # http://127.0.0.1:3300, opens the browser
+```
+
+CLI options: `-p, --port <port>` (default `3300`), `--host <host>` (default `127.0.0.1`), `--no-open`, `-h, --help`.
+
+The package ships only the prebuilt server, so installing it pulls no dependencies.
+
+## Development
 
 ```bash
 npm install
 npm run dev        # http://localhost:3000
-```
-
-Production build:
-
-```bash
-npm run build
-node .output/server/index.mjs
+npm run build      # production build into .output
+npm start          # run the build via the CLI
 ```
 
 ## API
@@ -50,6 +64,7 @@ A single endpoint returns all dashboard data; the response type is `AnalyticsRes
 ## Project structure
 
 ```
+bin/cli.mjs                     CLI: starts the built server, opens the browser
 server/api/analytics.get.ts     endpoint
 server/utils/                   file scan, parser, cache, aggregation
 shared/types/analytics.ts       types shared by client and server
